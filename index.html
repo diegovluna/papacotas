@@ -1,0 +1,2853 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Papa Cotas - Gest&#xe3;o de Pagamentos de Servi&#xe7;os Extraordin&#xe1;rios</title>
+<style>
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: #f8fafc;
+        color: #334155;
+        font-size: 17.28px;
+        line-height: 1.5;
+    }
+
+    .container {
+        max-width: 1080px; 
+        margin: 1.8rem auto; 
+        padding: 2.25rem; 
+        background-color: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        color: #0f172a;
+        font-size: 2.7rem; 
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 1rem;  
+    }
+
+    /* Add new style for subtitle */
+    .subtitle {
+        color: #475569;
+        font-size: 1.35rem;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        font-weight: normal;
+    }
+
+    .form-container {
+        background-color: #f1f5f9;
+        border-radius: 12px;
+        padding: 2.25rem;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 3rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    /* Add new styles for form grid layout */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* Full width elements that should span both columns */
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* Adjust grid for smaller screens */
+    @media screen and (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    label {
+        font-size: 1.08rem; 
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 0.75rem;
+    }
+
+    .form-group label.checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 0.9rem; 
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background-color: white;
+        font-size: 1.08rem; 
+        transition: all 0.2s;
+        box-sizing: border-box;
+    }
+
+    input[type="checkbox"] {
+        width: auto;
+        margin-right: 0.5rem;
+    }
+
+    .form-group .checkbox-label {
+        width: 50%;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        padding: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    select {
+        width: 100%;
+        padding: 0.9rem; 
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background-color: white;
+        font-size: 1.08rem; 
+        transition: all 0.2s;
+        box-sizing: border-box;
+        height: auto; 
+        min-height: 3rem; 
+        display: block;
+        white-space: normal; 
+        text-overflow: ellipsis; 
+    }
+
+    select option {
+        padding: 0.5rem;
+        white-space: normal; 
+    }
+
+    input:focus, select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+    }
+
+    textarea {
+        width: 100%;
+        padding: 0.9rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background-color: white;
+        font-size: 1.08rem;
+        transition: all 0.2s;
+        box-sizing: border-box;
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+    }
+
+    textarea:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+    }
+
+    button {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.9rem 1.8rem; 
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1.08rem; 
+        transition: all 0.2s;
+    }
+
+    button:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(59,130,246,0.2);
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        margin-top: 2rem;
+        min-width: 792px; 
+        width: 100%;
+        font-size: 1.08rem;
+    }
+
+    th {
+        background-color: #fafafa;
+        color: #64748b;
+        font-size: 0.972rem; 
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        padding: 0.9rem; 
+        border-bottom: 1px solid #e2e8f0;
+        text-align: center; 
+    }
+
+    td {
+        padding: 0.9rem; 
+        border-bottom: 1px solid #f1f5f9;
+        color: #334155;
+        font-size: 1.08rem; 
+        text-align: left;
+    }
+
+    td.valor-column,
+    td:last-child,
+    th {
+        text-align: center;
+    }
+
+    table td:last-child {
+        width: 150px; 
+    }
+
+    td svg {
+        width: 14px;
+        height: 14px;
+        vertical-align: middle;
+    }
+
+    .status-pago, .status-pendente {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .status-pago svg, .status-pendente svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .status-icon svg {
+        width: 14.4px;
+        height: 14.4px;
+    }
+
+    .status-icon.pendente svg {
+        fill: #dc2626;
+    }
+
+    .status-icon.pago svg {
+        fill: #16a34a;
+    }
+
+    .btn-edit, .btn-delete, .btn-duplicate {
+        padding: 0.5rem;
+        width: 28.8px;
+        height: 28.8px;
+        font-size: 1.08rem;
+        border-radius: 4px;
+        background: #f1f5f9;
+        color: #64748b;
+        border: none;
+        margin: 0 2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .btn-edit svg, .btn-delete svg, .btn-duplicate svg {
+        width: 14.4px;
+        height: 14.4px;
+        fill: currentColor;
+    }
+
+    .btn-edit:hover {
+        background: #e2e8f0;
+        color: #3b82f6;
+    }
+
+    .btn-delete:hover {
+        background: #e2e8f0;
+        color: #dc2626;
+    }
+
+    .btn-duplicate:hover {
+        background: #e2e8f0;
+        color: #16a34a;
+    }
+
+    tr:hover td {
+        background-color: #f8fafc;
+    }
+
+    .status-icon {
+        display: inline-flex;
+        align-items: center;
+        margin-right: 0.5rem;
+    }
+
+    small {
+        display: flex;
+        align-items: center;
+        margin-top: 4px;
+        color: #64748b;
+        font-size: 0.9rem;
+        line-height: 1.2;
+        text-align: left;
+    }
+    small svg {
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        margin-right: 4px;
+        vertical-align: middle;
+    }
+
+    small:hover svg {
+        opacity: 1;
+    }
+
+    .nav-menu {
+        background: #ffffff;
+        border-right: 1px solid #e2e8f0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 270px; 
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+
+    .nav-menu-header {
+        background: #3b82f6;
+        padding: 1.8rem;
+        font-size: 1.62rem;
+        color: white;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .nav-menu-header img {
+        width: 40px;
+        height: auto;
+    }
+
+    .nav-menu-items {
+        padding: 1rem 0;
+    }
+
+    .nav-menu-item {
+        padding: 1.125rem 1.8rem;
+        color: #475569;
+        font-size: 1.08rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+    }
+
+    .nav-menu-item svg {
+        width: 14.4px;
+        height: 14.4px;
+        flex-shrink: 0;
+        fill: currentColor;
+    }
+
+    .calendar-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem; 
+        padding: 0 1rem;
+    }
+
+    .calendar-nav {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+    .calendar-nav:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(59,130,246,0.2);
+    }
+
+    #monthDisplay {
+        font-size: 1.89rem;
+        font-weight: 600;
+        color: #0f172a;
+        margin: 0;
+    }
+
+    .calendar-header {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1px;
+        background-color: #f8fafc;
+        padding: 0.9rem;
+        border-radius: 8px 8px 0 0;
+        font-weight: 600;
+        color: #64748b;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr); 
+        gap: 1px;
+        background-color: #e2e8f0;
+        border-radius: 0 0 8px 8px;
+        width: 100%;
+    }
+
+    .calendar-day {
+        background-color: white;
+        padding: 0.7rem;
+        transition: all 0.2s;
+        cursor: pointer;
+        aspect-ratio: 0.7;
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 63px;
+    }
+
+    .calendar-day.unavailable {
+        background-color: #f3f4f6;
+        cursor: not-allowed;
+    }
+
+    .calendar-day:hover {
+        background-color: #f8fafc;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .day-number {
+        font-weight: 600;
+        color: #334155;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+    }
+
+    .service-marker {
+        font-size: 0.9rem;
+        color: #64748b;
+        margin: 0.15rem 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.35rem;
+        overflow-y: auto;
+        max-height: calc(100% - 1.5rem);
+    }
+
+    .service-dot {
+        width: 7.2px;
+        height: 7.2px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 4px;
+    }
+
+    .calendar-popup {
+        position: absolute;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        padding: 1.5rem;
+        min-width: 270px; 
+        display: none;
+        z-index: 1000;
+    }
+
+    .calendar-popup.active {
+        display: block;
+    }
+
+    .popup-close {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: none;
+        border: none;
+        padding: 0.25rem;
+        cursor: pointer;
+        color: #64748b;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+    }
+
+    .popup-close svg {
+        width: 14.4px;
+        height: 14.4px;
+        fill: currentColor;
+    }
+
+    .popup-close:hover {
+        color: #475569;
+    }
+
+    .popup-header {
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 1.5rem;
+        padding-right: 1.5rem;
+        font-size: 1.35rem;
+    }
+
+    .popup-service {
+        background: #f8fafc;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 0.75rem;
+        word-break: break-word;
+        font-size: 1.08rem;
+    }
+
+    .popup-service:last-child {
+        margin-bottom: 0;
+    }
+
+    .popup-service small {
+        font-size: 0.9rem;
+        color: #64748b;
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+    .popup-service .attachment-icon {
+        cursor: pointer;
+        display: inline-flex;
+        vertical-align: middle;
+        margin-left: 0.5rem;
+    }
+
+    .popup-service .attachment-icon svg {
+        width: 14.4px;
+        height: 14.4px;
+        fill: #3b82f6;
+    }
+
+    .has-events {
+        border-left: 3px solid #3b82f6;
+    }
+
+    .today {
+        background-color: #f0f9ff;
+    }
+
+    .calendar-popup {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+
+    .financial-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .summary-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .chart-container {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .tab-button, .btn-edit, .btn-delete, .btn-duplicate {
+        transition: all 0.2s ease;
+    }
+
+    .tab-button:hover, .btn-edit:hover, .btn-delete:hover, .btn-duplicate:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .menu-toggle {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1100;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 0.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 39.6px; 
+        height: 39.6px; 
+        transition: all 0.2s;
+    }
+
+    .menu-toggle:hover {
+        background: #f8fafc;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .hamburger {
+        position: relative;
+        width: 19.8px; 
+        height: 2px;
+        background: #475569;
+        border-radius: 2px;
+        transition: all 0.3s;
+    }
+
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        width: 19.8px; 
+        height: 2px;
+        background: #475569;
+        border-radius: 2px;
+        transition: all 0.3s;
+    }
+
+    .hamburger::before {
+        transform: translateY(-6px);
+    }
+
+    .hamburger::after {
+        transform: translateY(6px);
+    }
+
+    .menu-toggle.active .hamburger {
+        background: transparent;
+    }
+
+    .menu-toggle.active .hamburger::before {
+        transform: rotate(45deg);
+    }
+
+    .menu-toggle.active .hamburger::after {
+        transform: rotate(-45deg);
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+        z-index: 900;
+    }
+
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .backup-options {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .backup-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .backup-section h2 {
+        color: #0f172a;
+        font-size: 1.35rem;
+        margin-bottom: 1rem;
+    }
+
+    .backup-section p {
+        color: #64748b;
+        margin-bottom: 1.5rem;
+    }
+
+    .backup-btn {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+    }
+
+    .backup-btn:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(59,130,246,0.2);
+    }
+
+    .tab-content {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .valor-column {
+        color: #16a34a;
+        text-align: center;
+    }
+
+    .scrollable-chart-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 2rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .chart-scroll-area {
+        min-width: 720px;
+        height: 360px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.16rem;
+        }
+
+        .subtitle {
+            font-size: 1.188rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .calendar-day {
+            min-height: 63px;
+            padding: 0.5rem;
+        }
+        
+        #monthDisplay {
+            font-size: 1.62rem;
+        }
+    }
+    .about-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .about-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .about-card h2 {
+        color: #0f172a;
+        font-size: 2.16rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .about-card h3 {
+        color: #334155;
+        font-size: 1.62rem;
+        font-weight: 600;
+        margin: 2.5rem 0 1.5rem;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 0.5rem;
+    }
+
+    .about-card p, .about-card li {
+        color: #475569;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        font-size: 1.08rem;
+    }
+
+    .about-card ul {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+    }
+
+    .about-card li {
+        color: #475569;
+        padding: 0.75rem 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .about-card li:before {
+        content: "•";
+        color: #3b82f6;
+        font-weight: bold;
+        margin-right: 0.75rem;
+    }
+
+    .about-card a {
+        color: #3b82f6;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .about-card a:hover {
+        color: #2563eb;
+        text-decoration: underline;
+    }
+
+    .version-badge {
+        display: inline-block;
+        background: #f0f9ff;
+        color: #3b82f6;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.945rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+    }
+
+    .about-footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    /* Add new styles for agenda view */
+    .calendar-view-toggle {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .view-button {
+        padding: 0.5rem 1rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        background: white;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .view-button.active {
+        background: #3b82f6;
+        color: white;
+        border-color: #3b82f6;
+    }
+
+    .agenda-view {
+        display: none;
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .agenda-view.active {
+        display: block;
+    }
+
+    .agenda-day {
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 1rem;
+    }
+
+    .agenda-day:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .agenda-date {
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 1.5rem;
+        font-size: 1.35rem;
+    }
+
+    .agenda-event {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8fafc;
+        border-radius: 8px;
+        margin-bottom: 0.75rem;
+    }
+
+    .agenda-time {
+        min-width: 100px;
+        color: #3b82f6;
+        font-weight: 500;
+        font-size: 1.08rem;
+    }
+
+    .agenda-details {
+        flex-grow: 1;
+    }
+
+    .agenda-type {
+        font-weight: 500;
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+        font-size: 1.188rem;
+    }
+
+    .agenda-operation {
+        color: #64748b;
+        font-size: 1.08rem;
+    }
+
+    .app-logo {
+        width: 135px;
+        height: auto;
+        display: block;
+        margin: 0 auto 1rem;
+    }
+
+    .ics-download {
+        margin-top: 1rem;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .ics-btn {
+        background-color: #3b82f6;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s;
+        font-size: 1.08rem;
+    }
+
+    .ics-btn:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(59,130,246,0.2);
+    }
+
+    .ics-btn svg {
+        width: 14.4px;
+        height: 14.4px;
+        fill: currentColor;
+    }
+
+    .preview-container, .preview-image {
+        display: none;
+    }
+
+    .attachment-icon svg {
+        width: 14.4px;
+        height: 14.4px;
+        fill: #3b82f6;  
+        filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+    }
+
+    .attachment-icon {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        margin-left: 4px;
+        vertical-align: middle;
+        transition: transform 0.2s ease;
+    }
+
+    .attachment-icon:hover {
+        transform: scale(1.1);
+    }
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.8);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+    }
+
+    .modal-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+    }
+
+    .modal-close {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        color: white;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    .modal-image {
+        max-width: 100%;
+        max-height: 90vh;
+        transform-origin: center;
+        transition: transform 0.2s;
+    }
+
+    .service-metadata {
+        text-align: left;
+        margin-top: 4px;
+    }
+
+    /* Add new styles for collapsible metadata */
+    .metadata-icon {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        margin-left: 4px;
+        vertical-align: middle;
+        transition: transform 0.2s;
+    }
+
+    .metadata-icon svg {
+        width: 14.4px;
+        height: 14.4px;
+        fill: #3b82f6;
+    }
+
+    .metadata-content {
+        display: none;
+        margin-top: 4px;
+    }
+
+    .metadata-content.active {
+        display: block;
+    }
+    
+    /* Add style for icon container */
+    .service-icons {
+      display: block;
+      margin-top: 4px;
+    }
+
+    .calendar-availability {
+        display: none;
+    }
+
+    .tab-content {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .valor-column {
+        color: #16a34a;
+        text-align: center;
+    }
+
+    .scrollable-chart-container {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 2rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+
+    .chart-scroll-area {
+        min-width: 720px;
+        height: 360px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+
+        h1 {
+            font-size: 2.16rem;
+        }
+
+        .subtitle {
+            font-size: 1.188rem;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+        }
+
+        .calendar-day {
+            min-height: 63px;
+            padding: 0.5rem;
+        }
+        
+        #monthDisplay {
+            font-size: 1.62rem;
+        }
+    }
+    .report-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .report-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .report-card h3 {
+      color: #0f172a;
+      font-size: 1.35rem;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    .chart-wrapper {
+      flex-grow: 1;
+      position: relative;
+    }
+
+    @media (max-width: 1200px) {
+      .report-container {
+        grid-template-columns: 1fr;
+      }
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <button class="menu-toggle" id="menuToggle">
+        <span class="hamburger"></span>
+    </button>
+
+    <div class="nav-menu" id="navMenu">
+        <div class="nav-menu-header">
+            Menu
+        </div>
+        <div class="nav-menu-items">
+            <a href="https://example.com/inicio" class="nav-menu-item">
+                <svg viewBox="0 0 24 24">
+                    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                </svg>
+                In&#xed;cio
+            </a>
+            <a href="https://example.com/calendario" class="nav-menu-item" id="calendarLink">
+                <svg viewBox="0 0 24 24">
+                    <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2L2 22l4-4h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/>
+                </svg>
+                Calend&#xe1;rio
+            </a>
+            <a href="https://example.com/financeiro" class="nav-menu-item">
+                <svg viewBox="0 0 24 24">
+                    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                </svg>
+                Financeiro
+            </a>
+            <a href="https://example.com/relatorio" class="nav-menu-item">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2L2 22l4-4h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
+                </svg>
+                Relat&#xf3;rios
+            </a>
+            <a href="https://example.com/sobre" class="nav-menu-item">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v4z"/>
+                </svg>
+                Sobre
+            </a>
+            <a href="https://example.com/backup" class="nav-menu-item" id="backupLink">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h16c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+                </svg>
+                Backup
+            </a>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="container">
+    <h1>PAPA COTAS</h1>
+    <div class="subtitle">Gest&#xe3;o de Pagamentos de Servi&#xe7;os Extraordin&#xe1;rios</div>
+
+    <div class="form-container">
+        <form id="servicoForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="data">Data do Servi&#xe7;o:</label>
+                    <input type="date" id="data" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipoServico">Tipo de Servi&#xe7;o:</label>
+                    <select id="tipoServico" required>
+                        <option value>Selecione o tipo de servi&#xe7;o</option>
+                        <option value="Seguran&#xe7;a">Seguran&#xe7;a</option>
+                        <option value="Fiscaliza&#xe7;&#xe3;o">Fiscaliza&#xe7;&#xe3;o</option>
+                        <option value="GATI">GATI</option>
+                        <option value="GT Rural">GT Rural</option>
+                        <option value="GT">GT</option>
+                        <option value="MO/ROCAM">MO/ROCAM</option> 
+                        <option value="Outros">Outros</option>
+                        <option value="POG">POG</option>
+                        <option value="Refor&#xe7;o">Refor&#xe7;o</option>
+                        <option value="Viatura Escolar">Viatura Escolar</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="horaInicio">Hora de In&#xed;cio:</label>
+                    <input type="time" id="horaInicio" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="horaTermino">Hora de T&#xe9;rmino:</label>
+                    <input type="time" id="horaTermino" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="operacao">Opera&#xe7;&#xe3;o:</label>
+                    <input type="text" id="operacao" required placeholder="Nome da opera&#xe7;&#xe3;o">
+                </div>
+
+                <div class="form-group">
+                    <label for="valor">Valor do Pagamento:</label>
+                    <input type="number" id="valor" required step="0.01" min="0" placeholder="0.00">
+                </div>
+
+                <div class="form-group">
+                    <label for="dataPagamento">Data do Pagamento:</label>
+                    <input type="date" id="dataPagamento">
+                </div>
+
+                <div class="form-group">
+                    <div style="display: flex; gap: 2rem;">
+                        <label class="checkbox-label" style="width: auto">
+                            <input type="checkbox" id="isRepasse">
+                            Repasse
+                        </label>
+                        <label class="checkbox-label" style="width: auto">
+                            <input type="checkbox" id="isAreaAtuacao">
+                            &#xc1;rea de Atua&#xe7;&#xe3;o
+                        </label>
+                        <label class="checkbox-label" style="width: auto">
+                            <input type="checkbox" id="hasObservacoes">
+                            Observa&#xe7;&#xf5;es
+                        </label>
+                    </div>
+                </div>
+
+                <div id="repasseFields" style="display: none" class="full-width">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="qra">QRA:</label>
+                            <input type="text" id="qra" placeholder="Digite o QRA">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sei">SEI:</label>
+                            <input type="text" id="sei" placeholder="Digite o n&#xfa;mero do SEI">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bonus">Ajuda de custo:</label>
+                            <input type="number" id="bonus" placeholder="Digite o valor da ajuda de custo" step="0.01" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="areaAtuacaoField" style="display: none" class="full-width">
+                    <div class="form-group">
+                        <label for="areaAtuacao">&#xc1;rea de Atua&#xe7;&#xe3;o:</label>
+                        <textarea id="areaAtuacao" rows="3" placeholder="Digite a &#xe1;rea de atua&#xe7;&#xe3;o"></textarea>
+                    </div>
+                </div>
+
+                <div id="observacoesField" style="display: none" class="full-width">
+                    <div class="form-group">
+                        <label for="observacoes">Observa&#xe7;&#xf5;es:</label>
+                        <textarea id="observacoes" rows="3" placeholder="Digite suas observa&#xe7;&#xf5;es"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="anexos">Anexos (JPG):</label>
+                    <input type="file" id="anexos" accept=".jpg" multiple>
+                    <div id="preview-container" class="preview-container"></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="submit">Registrar Servi&#xe7;o</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="tabs">
+        <div class="tab-buttons" id="tabButtons"></div>
+        <div class="tab-content-container" id="tabContents"></div>
+    </div>
+</div>
+
+<script>
+let gestaoServicos;
+document.addEventListener('DOMContentLoaded', function () {
+  gestaoServicos = new GestaoServicos();
+  document.querySelector('a[href*="inicio"]')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    showMainPage();
+  });
+  document.querySelector('a[href*="calendario"]')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    showCalendarView();
+  });
+  document.querySelector('a[href*="sobre"]')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    showAboutPage();
+  });
+  document.querySelector('a[href*="backup"]')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    showBackupPage();
+  });
+  document.querySelector('a[href*="financeiro"]')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    showFinancialDashboard();
+  });
+  document.querySelector('a[href*="relatorio"]')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    showReportDashboard();
+  });
+});
+document.getElementById('menuToggle').addEventListener('click', function () {
+  this.classList.toggle('active');
+  document.getElementById('navMenu').classList.toggle('active');
+  document.getElementById('overlay').classList.toggle('active');
+});
+document.getElementById('overlay').addEventListener('click', function () {
+  document.getElementById('menuToggle').classList.remove('active');
+  document.getElementById('navMenu').classList.remove('active');
+  this.classList.remove('active');
+});
+function showMainPage() {
+  const container = document.querySelector('.container');
+  container.innerHTML = `
+    <h1>PAPA COTAS</h1>
+    <div class="subtitle">Gestão de Pagamentos de Serviços Extraordinários</div>
+
+    <div class="form-container">
+        <form id="servicoForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+                <label for="data">Data do Serviço:</label>
+                <input type="date" id="data" required>
+            </div>
+
+            <div class="form-group">
+                <label for="horaInicio">Hora de Início:</label>
+                <input type="time" id="horaInicio" required>
+            </div>
+
+            <div class="form-group">
+                <label for="horaTermino">Hora de Término:</label>
+                <input type="time" id="horaTermino" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoServico">Tipo de Serviço:</label>
+                <select id="tipoServico" required style="width: 100%;">
+                    <option value="">Selecione o tipo de serviço</option>
+                    <option value="Segurança">Segurança</option>
+                    <option value="Fiscalização">Fiscalização</option>
+                    <option value="GATI">GATI</option>
+                    <option value="GT Rural">GT Rural</option>
+                    <option value="GT">GT</option>
+                    <option value="MO/ROCAM">MO/ROCAM</option>
+                    <option value="Outros">Outros</option>
+                    <option value="POG">POG</option>
+                    <option value="Reforço">Reforço</option>
+                    <option value="Viatura Escolar">Viatura Escolar</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="operacao">Operação:</label>
+                <input type="text" id="operacao" required placeholder="Nome da operação">
+            </div>
+
+            <div class="form-group">
+                <label for="valor">Valor do Pagamento:</label>
+                <input type="number" id="valor" required step="0.01" min="0" placeholder="0.00">
+            </div>
+
+            <div class="form-group">
+                <label for="dataPagamento">Data do Pagamento:</label>
+                <input type="date" id="dataPagamento">
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / 3;">
+                <label class="checkbox-label" style="width: auto">
+                    <input type="checkbox" id="isRepasse">
+                    Repasse
+                </label>
+                <label class="checkbox-label" style="width: auto">
+                    <input type="checkbox" id="isAreaAtuacao">
+                    Área de Atuação  
+                </label>
+                <label class="checkbox-label" style="width: auto">
+                    <input type="checkbox" id="hasObservacoes">
+                    Observações
+                </label>
+            </div>
+
+            <div id="repasseFields" style="display: none; grid-column: 1 / 3;">
+                <div class="form-group">
+                    <label for="qra">QRA:</label>
+                    <input type="text" id="qra" placeholder="Digite o QRA">
+                </div>
+
+                <div class="form-group">
+                    <label for="sei">SEI:</label>
+                    <input type="text" id="sei" placeholder="Digite o número do SEI">
+                </div>
+
+                <div class="form-group">
+                    <label for="bonus">Ajuda de custo:</label>
+                    <input type="number" id="bonus" placeholder="Digite o valor da ajuda de custo" step="0.01" min="0">
+                </div>
+            </div>
+
+            <div id="areaAtuacaoField" style="display: none; grid-column: 1 / 3;">
+                <div class="form-group">
+                    <label for="areaAtuacao">Área de Atuação:</label>
+                    <textarea id="areaAtuacao" rows="3" placeholder="Digite a área de atuação"></textarea>
+                </div>
+            </div>
+
+            <div id="observacoesField" style="display: none; grid-column: 1 / 3;">
+                <div class="form-group">
+                    <label for="observacoes">Observações:</label>
+                    <textarea id="observacoes" rows="3" placeholder="Digite suas observações"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / 3;">
+                <label for="anexos">Anexos (JPG):</label>
+                <input type="file" id="anexos" accept=".jpg" multiple>
+                <div id="preview-container" class="preview-container"></div>
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / 3; text-align: right;">
+                <button type="submit">Registrar Serviço</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="tabs">
+        <div class="tab-buttons" id="tabButtons"></div>
+        <div class="tab-content-container" id="tabContents"></div>
+    </div>
+  `;
+  setTimeout(() => {
+    const gestaoServicos = new GestaoServicos();
+  }, 0);
+}
+function showAboutPage() {
+  const container = document.querySelector('.container');
+  container.innerHTML = `
+        <h1>PAPA COTAS</h1>
+        <div class="subtitle">Gestão de Pagamentos de Serviços Extraordinários</div>
+        
+        <div class="about-container">
+            <div class="about-card">
+                <h2>Sistema de Gestão de Pagamentos</h2>
+                
+                <p>O Papa Cotas é uma solução moderna e eficiente para o gerenciamento de pagamentos de serviços extraordinários, desenvolvida com foco na usabilidade e praticidade.</p>
+
+                <h3>Principais Funcionalidades</h3>
+                <ul>
+                    <li>Registro completo de serviços extraordinários</li>
+                    <li>Gestão detalhada de pagamentos e repasses</li>
+                    <li>Visualização em calendário interativo</li>
+                    <li>Dashboard financeiro com análises e gráficos</li>
+                    <li>Sistema de backup e restauração de dados</li>
+                    <li>Suporte a anexos de imagens</li>
+                </ul>
+
+                <h3>Informações Técnicas</h3>
+                <p>Desenvolvido por Diego Luna através da tecnologia websim.ai</p>
+                <p>Contato: <a href="mailto:diegovluna@hotmail.com">diegovluna@hotmail.com</a></p>
+                
+                <div class="about-footer">
+                    <span class="version-badge">Versão 1.0.0</span>
+                    <p> ${new Date().getFullYear()} Papa Cotas. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+function showFinancialDashboard() {
+  const container = document.querySelector('.container');
+  container.innerHTML = `
+        <h1>PAPA COTAS</h1>
+        <div class="subtitle">Gestão de Pagamentos de Serviços Extraordinários</div>
+        <div class="financial-dashboard">
+            <div class="financial-summary">
+                <div class="summary-card">
+                    <h3>Total Pendente</h3>
+                    <div class="summary-value pending" id="totalPending">R$ 0,00</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Pago</h3>
+                    <div class="summary-value paid" id="totalPaid">R$ 0,00</div>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Geral</h3>
+                    <div class="summary-value" id="totalAmount">R$ 0,00</div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="statusChart"></canvas>
+            </div>
+
+            <div class="scrollable-chart-container">
+                <div class="chart-scroll-area">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    `;
+  updateFinancialDashboard();
+}
+function updateFinancialDashboard() {
+  const servicos = gestaoServicos.servicos;
+  const totalPaid = servicos.filter(s => s.dataPagamento).reduce((sum, s) => sum + s.valor, 0);
+  const totalPending = servicos.filter(s => !s.dataPagamento).reduce((sum, s) => sum + s.valor, 0);
+  const totalAmount = totalPaid + totalPending;
+  document.getElementById('totalPending').textContent = `R$ ${totalPending.toFixed(2)}`;
+  document.getElementById('totalPaid').textContent = `R$ ${totalPaid.toFixed(2)}`;
+  document.getElementById('totalAmount').textContent = `R$ ${totalAmount.toFixed(2)}`;
+  const statusCtx = document.getElementById('statusChart').getContext('2d');
+  new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Pago', 'Pendente'],
+      datasets: [{
+        data: [totalPaid, totalPending],
+        backgroundColor: ['#28a745', '#dc3545']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Distribuição de Pagamentos'
+        }
+      }
+    }
+  });
+  const monthlyData = getMonthlyData(servicos);
+  const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+  new Chart(monthlyCtx, {
+    type: 'bar',
+    data: {
+      labels: monthlyData.labels,
+      datasets: [{
+        label: 'Valores Pagos',
+        data: monthlyData.paid,
+        backgroundColor: '#28a745',
+        borderColor: '#28a745',
+        borderWidth: 1
+      }, {
+        label: 'Valores Pendentes',
+        data: monthlyData.pending,
+        backgroundColor: '#dc3545',
+        borderColor: '#dc3545',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          stacked: false
+        },
+        y: {
+          stacked: false,
+          beginAtZero: true,
+          ticks: {
+            callback: function (value) {
+              return 'R$ ' + value.toFixed(2);
+            }
+          }
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Valores por Mês'
+        }
+      }
+    }
+  });
+}
+function showCalendarView() {
+  const container = document.querySelector('.container');
+  const currentDate = new Date();
+  let currentMonth = currentDate.getMonth();
+  let currentYear = currentDate.getFullYear();
+  let markingUnavailable = false;
+  container.innerHTML = `
+                <h1>PAPA COTAS</h1>
+                <div class="subtitle">Gestão de Pagamentos de Serviços Extraordinários</div>
+                <div class="calendar-controls">
+                    <button class="calendar-nav" id="prevMonth">&lt; Anterior</button>
+                    <h2 id="monthDisplay"></h2>
+                    <button class="calendar-nav" id="nextMonth">Próximo &gt;</button>
+                </div>
+                <div class="calendar-view-toggle">
+                    <button class="view-button active" data-view="calendar">Calendário</button>
+                    <button class="view-button" data-view="agenda">Agenda</button>
+                </div>
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <div>Dom</div>
+                        <div>Seg</div>
+                        <div>Ter</div>
+                        <div>Qua</div>
+                        <div>Qui</div>
+                        <div>Sex</div>
+                        <div>Sáb</div>
+                    </div>
+                    <div class="calendar-days" id="calendarDays"></div>
+                    <div class="ics-download">
+                        <button class="ics-btn" id="downloadICS">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M19 9h-4V3H5c-1.1 0-2 .9-2 2L2 22l4-4h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/>
+                            </svg>
+                            Baixar Calendário (ICS)
+                        </button>
+                        <button id="availabilityToggle" class="availability-toggle">Marcar Indisponibilidade</button>
+                    </div>
+                </div>
+                <div class="calendar-popup" id="eventPopup">
+                    <button class="popup-close">&times;</button>
+                    <div class="popup-header"></div>
+                    <div class="popup-content"></div>
+                </div>
+                <div class="agenda-view"></div>
+            `;
+  document.getElementById('availabilityToggle').addEventListener('click', function () {
+    markingUnavailable = !markingUnavailable;
+    this.classList.toggle('active');
+    this.textContent = markingUnavailable ? 'Cancelar Marcação' : 'Marcar Indisponibilidade';
+  });
+  function updateCalendar() {
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const startingDay = firstDay.getDay();
+    const monthLength = lastDay.getDate();
+    const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    document.getElementById('monthDisplay').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    const calendarDays = document.getElementById('calendarDays');
+    calendarDays.innerHTML = '';
+    for (let i = 0; i < startingDay; i++) {
+      const emptyDay = document.createElement('div');
+      emptyDay.className = 'calendar-day';
+      calendarDays.appendChild(emptyDay);
+    }
+    for (let day = 1; day <= monthLength; day++) {
+      const currentDate = new Date(currentYear, currentMonth, day);
+      const dateStr = currentDate.toISOString().split('T')[0];
+      const isToday = currentDate.toDateString() === new Date().toDateString();
+      const servicesOnDay = gestaoServicos.servicos.filter(servico => {
+        const [year, month, day_str] = servico.data.split('-');
+        return servico.data === dateStr;
+      });
+      const hasEvents = servicesOnDay.length > 0;
+      const isUnavailable = gestaoServicos.unavailableDays.includes(dateStr);
+      const dayDiv = document.createElement('div');
+      dayDiv.className = `calendar-day${hasEvents ? ' has-events' : ''}${isToday ? ' today' : ''}${isUnavailable ? ' unavailable' : ''}`;
+      dayDiv.innerHTML = `
+                        <div class="day-number">${day}</div>
+                        ${hasEvents ? servicesOnDay.map(servico => `
+                            <div class="service-marker">
+                                <span class="service-dot" style="background-color: ${servico.dataPagamento ? '#16a34a' : '#dc2626'}"></span>
+                                ${servico.tipoServico}
+                            </div>
+                        `).join('') : ''}
+                    `;
+      dayDiv.addEventListener('click', e => {
+        if (markingUnavailable) {
+          e.stopPropagation();
+          if (hasEvents) {
+            alert('Não é possível marcar como indisponível um dia com eventos.');
+            return;
+          }
+          const index = gestaoServicos.unavailableDays.indexOf(dateStr);
+          if (index > -1) {
+            gestaoServicos.unavailableDays.splice(index, 1);
+            dayDiv.classList.remove('unavailable');
+          } else {
+            gestaoServicos.unavailableDays.push(dateStr);
+            dayDiv.classList.add('unavailable');
+          }
+          gestaoServicos.saveUnavailableDays();
+        } else if (hasEvents) {
+          showEventPopup(e, currentDate, servicesOnDay);
+        }
+      });
+      calendarDays.appendChild(dayDiv);
+    }
+    const totalCells = calendarDays.children.length;
+    const rowsNeeded = Math.ceil(totalCells / 7);
+    const totalNeeded = rowsNeeded * 7;
+    for (let i = totalCells; i < totalNeeded; i++) {
+      const emptyDay = document.createElement('div');
+      emptyDay.className = 'calendar-day';
+      calendarDays.appendChild(emptyDay);
+    }
+  }
+  function updateAgendaView() {
+    const agendaView = document.querySelector('.agenda-view');
+    const servicesInMonth = gestaoServicos.servicos.filter(servico => {
+      const serviceDate = new Date(servico.data);
+      return serviceDate.getMonth() === currentMonth && serviceDate.getFullYear() === currentYear;
+    }).sort((a, b) => new Date(a.data) - new Date(b.data));
+    const groupedByDay = servicesInMonth.reduce((acc, service) => {
+      const date = service.data;
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(service);
+      return acc;
+    }, {});
+    agendaView.innerHTML = Object.entries(groupedByDay).map(([date, services]) => {
+      const formattedDate = new Date(date).toLocaleDateString('pt-BR', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long'
+      });
+      const sortedServices = services.sort((a, b) => {
+        if (!a.horaInicio || !b.horaInicio) return 0;
+        return a.horaInicio.localeCompare(b.horaInicio);
+      });
+      return `
+        <div class="agenda-day">
+          <div class="agenda-date">${formattedDate}</div>
+          ${sortedServices.map(service => `
+            <div class="agenda-event">
+              <div class="status-dot ${service.dataPagamento ? 'paid' : 'pending'}"></div>
+              <div class="agenda-time">
+                ${service.horaInicio ? `${service.horaInicio} - ${service.horaTermino}` : 'Horário não definido'}
+              </div>
+              <div class="agenda-details">
+                <div class="agenda-type">
+                  ${service.tipoServico}
+                </div>
+                <div class="agenda-operation">${service.operacao}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }).join('');
+  }
+  function showEventPopup(event, date, services) {
+    const popup = document.getElementById('eventPopup');
+    const rect = event.currentTarget.getBoundingClientRect();
+    popup.style.top = `${rect.bottom + window.scrollY + 10}px`;
+    popup.style.left = `${rect.left + window.scrollX}px`;
+    popup.querySelector('.popup-header').textContent = `Serviços em ${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    const popupContent = services.map(service => `
+        <div class="popup-service">
+            <strong>${service.tipoServico}</strong>
+            ${service.anexos?.length ? `
+                <span class="attachment-icon" onclick="showImageModal('${service.anexos[0]}')" title="Ver anexo">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15 6v12c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-.55.45-1 1-1s1 .45 1 1v10h2V4c0-1.66-1.34-3-3-3S9 2.34 9 4v14c0 2.21 1.79 4 4 4s4-1.79 4-4V6h-2z"/>
+                    </svg>
+                </span>
+            ` : ''}<br>
+            <div class="service-icons">
+                ${service.isRepasse ? `
+                    <span class="metadata-icon" onclick="toggleMetadata(this, 'repasse')">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/>
+                        </svg>
+                    </span>
+                    <div class="metadata-content" data-type="repasse">
+                        <small style="text-align: left; display: block; white-space: nowrap;">
+                            <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle; margin-right: 2px" fill="#3b82f6">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm6 5H6v-.99c.2-.72 3.3-2.01 6-2.01s5.8 1.29 6 2v1z"/>
+                            </svg>
+                            ${service.qra}${service.sei ? `, <span style="color: #3b82f6">SEI:</span> ${service.sei}` : ''}
+                            ${service.bonus ? `, <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle; margin-right: 2px" fill="#3b82f6">
+                                <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                            </svg> R$ ${parseFloat(service.bonus).toFixed(2)}` : ''}
+                        </small>
+                    </div>
+                ` : ''}
+                ${service.areaAtuacao ? `
+                    <span class="metadata-icon" onclick="toggleMetadata(this, 'area')">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                </span>
+                <div class="metadata-content" data-type="area">
+                    <small style="text-align: left; display: block; margin-top: 4px; white-space: nowrap;">
+                        ${service.areaAtuacao}
+                    </small>
+                </div>
+            ` : ''}
+            ${service.observacoes ? `
+                <span class="metadata-icon" onclick="toggleMetadata(this, 'obs')">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+                    </svg>
+                </span>
+                <div class="metadata-content" data-type="obs">
+                    <small style="text-align: left; display: block; margin-top: 4px; white-space: nowrap;">
+                        ${service.observacoes}
+                    </small>
+                </div>
+            ` : ''}
+            ${service.dataPagamento ? '<svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="#16a34a"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="#dc2626"/></svg>'}
+        </div>
+            ${service.horaInicio ? `${service.horaInicio} - ${service.horaTermino}<br>` : ''}
+            ${service.operacao}<br>
+            R$ ${service.valor.toFixed(2)}
+        </div>
+    `).join('');
+    popup.querySelector('.popup-content').innerHTML = popupContent;
+    popup.classList.add('active');
+    const closePopupButton = popup.querySelector('.popup-close');
+    closePopupButton.innerHTML = `
+        <svg viewBox="0 0 24 24">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+    `;
+    closePopupButton.onclick = e => {
+      e.stopPropagation();
+      popup.classList.remove('active');
+      document.removeEventListener('click', closePopup);
+    };
+    const closePopup = e => {
+      if (!popup.contains(e.target) && !event.currentTarget.contains(e.target)) {
+        popup.classList.remove('active');
+        document.removeEventListener('click', closePopup);
+      }
+    };
+    setTimeout(() => {
+      document.addEventListener('click', closePopup);
+    }, 0);
+  }
+  const viewButtons = document.querySelectorAll('.view-button');
+  const calendarView = document.querySelector('.calendar');
+  const agendaView = document.querySelector('.agenda-view');
+  viewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      viewButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      if (button.dataset.view === 'calendar') {
+        calendarView.style.display = 'block';
+        agendaView.classList.remove('active');
+      } else {
+        calendarView.style.display = 'none';
+        agendaView.classList.add('active');
+        updateAgendaView();
+      }
+    });
+  });
+  document.getElementById('prevMonth').onclick = () => {
+    currentMonth--;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    }
+    updateCalendar();
+    updateAgendaView();
+  };
+  document.getElementById('nextMonth').onclick = () => {
+    currentMonth++;
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+    updateCalendar();
+    updateAgendaView();
+  };
+  document.getElementById('downloadICS').onclick = () => {
+    generateICSFile();
+  };
+  updateCalendar();
+  updateAgendaView();
+}
+function getMonthlyData(servicos) {
+  const monthsMap = new Map();
+  servicos.forEach(servico => {
+    const date = new Date(servico.data);
+    const monthKey = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+    if (!monthsMap.has(monthKey)) {
+      monthsMap.set(monthKey, {
+        paid: 0,
+        pending: 0,
+        monthName: date.toLocaleString('pt-BR', {
+          month: 'long',
+          year: 'numeric'
+        })
+      });
+    }
+    if (servico.dataPagamento) {
+      monthsMap.get(monthKey).paid += servico.valor;
+    } else {
+      monthsMap.get(monthKey).pending += servico.valor;
+    }
+  });
+  const sortedMonths = Array.from(monthsMap.entries()).sort((a, b) => b[0].localeCompare(a[0]));
+  return {
+    labels: sortedMonths.map(([_, data]) => data.monthName),
+    paid: sortedMonths.map(([_, data]) => data.paid),
+    pending: sortedMonths.map(([_, data]) => data.pending)
+  };
+}
+function showImageModal(imageUrl) {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img src="${imageUrl}" class="modal-image" id="modalImage">
+        </div>
+    `;
+  document.body.appendChild(modal);
+  modal.style.display = 'flex';
+  const image = document.getElementById('modalImage');
+  let scale = 1;
+  let isDragging = false;
+  let startX,
+    startY,
+    translateX = 0,
+    translateY = 0;
+  let initialDistance = 0;
+  modal.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      initialDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+    }
+  });
+  modal.addEventListener('touchmove', e => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const currentDistance = Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+      const delta = currentDistance - initialDistance;
+      const newScale = Math.min(Math.max(scale + delta * 0.01, 1), 4);
+      image.style.transform = `scale(${newScale}) translate(${translateX}px, ${translateY}px)`;
+      scale = newScale;
+      initialDistance = currentDistance;
+    }
+  });
+  modal.addEventListener('wheel', e => {
+    e.preventDefault();
+    const delta = e.deltaY * -0.01;
+    const newScale = Math.min(Math.max(scale + delta, 1), 4);
+    scale = newScale;
+    image.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+  });
+  modal.addEventListener('mousedown', e => {
+    if (e.target === image) {
+      isDragging = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+    }
+  });
+  modal.addEventListener('mousemove', e => {
+    if (isDragging) {
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      image.style.transform = `scale(${scale}) translate(${translateX}px, ${translateY}px)`;
+    }
+  });
+  modal.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
+  const closeModal = () => {
+    modal.style.display = 'none';
+    modal.remove();
+  };
+  modal.querySelector('.modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+}
+function generateICSFile() {
+  const icsContent = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Papa Cotas//Calendar//PT'].join('\r\n');
+  const events = gestaoServicos.servicos.map(servico => {
+    const date = new Date(servico.data);
+    const dateStr = date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const timeStr = servico.horaInicio ? `${servico.data}T${servico.horaInicio}:00` : servico.data;
+    const endTimeStr = servico.horaTermino ? `${servico.data}T${servico.horaTermino}:00` : servico.data;
+    return ['BEGIN:VEVENT', `UID:${servico.id}@papacotas`, `DTSTAMP:${dateStr}`, `DTSTART:${timeStr.replace(/[-:]/g, '')}`, `DTEND:${endTimeStr.replace(/[-:]/g, '')}`, `SUMMARY:${servico.tipoServico} - ${servico.operacao}`, `DESCRIPTION:Valor: R$ ${servico.valor.toFixed(2)}\\n${servico.isRepasse ? `QRA: ${servico.qra}\\nSEI: ${servico.sei}` : ''}`, 'END:VEVENT'].join('\r\n');
+  }).join('\r\n');
+  const finalContent = [icsContent, events, 'END:VCALENDAR'].join('\r\n');
+  const blob = new Blob([finalContent], {
+    type: 'text/calendar;charset=utf-8'
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'papa_cotas_calendario.ics';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+function toggleMetadata(icon, type) {
+  const metadataContent = icon.nextElementSibling;
+  const allContents = document.querySelectorAll('.metadata-content');
+  allContents.forEach(content => {
+    if (content !== metadataContent) {
+      content.classList.remove('active');
+    }
+  });
+  metadataContent.classList.toggle('active');
+}
+class ServicoExtraordinario {
+  constructor(data, tipoServico, operacao, valor, dataPagamento, isRepasse, qra, sei, bonus, anexos = [], horaInicio = '', horaTermino = '', observacoes = '', areaAtuacao = '') {
+    this.data = data;
+    this.tipoServico = tipoServico;
+    this.operacao = operacao;
+    this.valor = valor;
+    this.dataPagamento = dataPagamento;
+    this.isRepasse = isRepasse;
+    this.qra = qra;
+    this.sei = sei;
+    this.bonus = bonus;
+    this.id = Date.now().toString();
+    this.anexos = anexos;
+    this.horaInicio = horaInicio;
+    this.horaTermino = horaTermino;
+    this.observacoes = observacoes;
+    this.areaAtuacao = areaAtuacao;
+  }
+}
+class GestaoServicos {
+  constructor() {
+    this.servicos = JSON.parse(localStorage.getItem('servicos')) || [];
+    this.form = document.getElementById('servicoForm');
+    this.tabButtons = document.getElementById('tabButtons');
+    this.tabContents = document.getElementById('tabContents');
+    this.unavailableDays = JSON.parse(localStorage.getItem('unavailableDays')) || [];
+    document.getElementById('isRepasse')?.addEventListener('change', e => this.toggleRepasseFields(e));
+    document.getElementById('isAreaAtuacao')?.addEventListener('change', e => this.toggleAreaAtuacaoField(e));
+    this.form?.addEventListener('submit', e => this.handleSubmit(e));
+    document.getElementById('anexos')?.addEventListener('change', e => {
+      const previewContainer = document.getElementById('preview-container');
+      if (!previewContainer) return;
+      previewContainer.innerHTML = '';
+      Array.from(e.target.files).forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const imagePreview = document.createElement('div');
+          imagePreview.className = 'image-preview';
+          imagePreview.innerHTML = `
+            <img src="${e.target.result}" class="preview-image" alt="Preview ${index + 1}">
+            <button class="remove-image" data-index="${index}">&times;</button>
+          `;
+          previewContainer.appendChild(imagePreview);
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+    document.getElementById('hasObservacoes')?.addEventListener('change', e => this.toggleObservacoesField(e));
+    this.loadServicos();
+  }
+  formatDate(dateString) {
+    if (!dateString) return '-';
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  }
+  getYearFromDate(servico) {
+    return parseInt(servico.data.split('-')[0]);
+  }
+  getUniqueYears() {
+    const years = this.servicos.map(servico => this.getYearFromDate(servico));
+    const uniqueYears = [...new Set(years)];
+    return uniqueYears.sort((a, b) => b - a);
+  }
+  createTabButtons() {
+    const years = this.getUniqueYears();
+    this.tabButtons.innerHTML = '';
+    if (years.length === 0) {
+      const currentYear = new Date().getFullYear();
+      years.push(currentYear);
+    }
+    years.forEach(year => {
+      const button = document.createElement('button');
+      button.className = 'tab-button';
+      button.textContent = year;
+      button.onclick = () => this.showTab(year);
+      this.tabButtons.appendChild(button);
+    });
+    if (years.length > 0) {
+      this.showTab(years[0]);
+    }
+  }
+  createTabContent(year) {
+    const servicosDoAno = this.servicos.filter(servico => this.getYearFromDate(servico) === year).sort((a, b) => {
+      const dateA = new Date(a.data).getTime();
+      const dateB = new Date(b.data).getTime();
+      return dateB - dateA;
+    });
+    const tabContent = document.createElement('div');
+    tabContent.className = 'tab-content';
+    tabContent.id = `tab-${year}`;
+    if (servicosDoAno.length === 0) {
+      tabContent.innerHTML = `
+                        <div class="empty-message" style="text-align: center; padding: 2rem; color: #64748b;">
+                            Nenhum registro encontrado para o ano de ${year}
+                        </div>
+                    `;
+      return tabContent;
+    }
+    const table = document.createElement('table');
+    table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Tipo de Serviço</th>
+                            <th>Operação</th>
+                            <th>Valor</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${servicosDoAno.map(servico => `
+                            <tr>
+                                <td>${this.formatDate(servico.data)}</td>
+                                <td>${servico.horaInicio ? `${servico.horaInicio} - ${servico.horaTermino}` : '-'}</td>
+                                <td>
+                                    ${servico.tipoServico}
+                                    ${servico.anexos?.length ? `
+                                        <span class="attachment-icon" onclick="showImageModal('${servico.anexos[0]}')" title="Ver anexo">
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M15 6v12c0 1.1-.9 2-2 2s-2-.9-2-2V4c0-.55.45-1 1-1s1 .45 1 1v10h2V4c0-1.66-1.34-3-3-3S9 2.34 9 4v14c0 2.21 1.79 4 4 4s4-1.79 4-4V6h-2z"/>
+                                            </svg>
+                                        </span>
+                                    ` : ''}
+                                    <div class="service-icons">
+                                        ${servico.isRepasse ? `
+                                            <span class="metadata-icon" onclick="toggleMetadata(this, 'repasse')">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3L5 6.99h3V14h2V6.99h3L9 3z"/>
+                                                </svg>
+                                            </span>
+                                            <div class="metadata-content" data-type="repasse">
+                                                <small style="text-align: left; display: block; white-space: nowrap;">
+                                                    <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle; margin-right: 2px" fill="#3b82f6">
+                                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0-6c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 7c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4zm6 5H6v-.99c.2-.72 3.3-2.01 6-2.01s5.8 1.29 6 2v1z"/>
+                                                    </svg>
+                                                    ${servico.qra}${servico.sei ? `, <span style="color: #3b82f6">SEI:</span> ${servico.sei}` : ''}
+                                                    ${servico.bonus ? `, <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle; margin-right: 2px" fill="#3b82f6">
+                                                        <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                                    </svg> R$ ${parseFloat(servico.bonus).toFixed(2)}` : ''}
+                                                </small>
+                                            </div>
+                                        ` : ''}
+                                        ${servico.areaAtuacao ? `
+                                            <span class="metadata-icon" onclick="toggleMetadata(this, 'area')">
+                                                <svg viewBox="0 0 24 24">
+                                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                            </svg>
+                                        </span>
+                                        <div class="metadata-content" data-type="area">
+                                            <small style="text-align: left; display: block; margin-top: 4px; white-space: nowrap;">
+                                                ${servico.areaAtuacao}
+                                            </small>
+                                        </div>
+                                    ` : ''}
+                                    ${servico.observacoes ? `
+                                        <span class="metadata-icon" onclick="toggleMetadata(this, 'obs')">
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M20 2H4c-1.1 0-2 .9-2 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4h3z"/>
+                                            </svg>
+                                        </span>
+                                        <div class="metadata-content" data-type="obs">
+                                            <small style="text-align: left; display: block; margin-top: 4px; white-space: nowrap;">
+                                                ${servico.observacoes}
+                                            </small>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            </td>
+                            <td>${servico.operacao}</td>
+                            <td class="valor-column">R$ ${servico.valor.toFixed(2)}</td>
+                            <td class="${servico.dataPagamento ? 'status-pago' : 'status-pendente'}">
+                                ${servico.dataPagamento ? '<svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="#16a34a"/></svg>' : '<svg viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="10" fill="#dc2626"/></svg>'}
+                            </td>
+                            <td style="text-align: center;">
+                                <button class="btn-edit" data-id="${servico.id}">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                    </svg>
+                                </button>
+                                <button class="btn-duplicate" data-id="${servico.id}">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M16 1H4c-1.1 0-2 .9-2 2L2 22l4-4h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                                    </svg>
+                                </button>
+                                <button class="btn-delete" data-id="${servico.id}">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z"/>
+                                    </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+    table.addEventListener('click', e => {
+      const target = e.target.closest('button');
+      if (!target) return;
+      const id = target.dataset.id;
+      if (target.classList.contains('btn-edit')) {
+        this.editServico(id);
+      } else if (target.classList.contains('btn-delete')) {
+        this.deleteServico(id);
+      } else if (target.classList.contains('btn-duplicate')) {
+        this.duplicateServico(id);
+      }
+    });
+    tabContent.appendChild(table);
+    return tabContent;
+  }
+  showTab(year) {
+    this.tabButtons.querySelectorAll('.tab-button').forEach(button => {
+      button.classList.remove('active');
+      if (button.textContent === year.toString()) {
+        button.classList.add('active');
+      }
+    });
+    this.tabContents.innerHTML = '';
+    const tabContent = this.createTabContent(year);
+    this.tabContents.appendChild(tabContent);
+    tabContent.classList.add('active');
+  }
+  loadServicos() {
+    this.createTabButtons();
+  }
+  getStatusIcon(isPago) {
+    if (isPago) {
+      return `<div class="status-icon pago">
+            <svg viewBox="0 0 24 24" width="16" height="16">
+                <circle cx="12" cy="12" r="10" fill="#16a34a"/>
+            </svg>
+        </div>`;
+    } else {
+      return `<div class="status-icon pendente">
+            <svg viewBox="0 0 24 24" width="16" height="16">
+                <circle cx="12" cy="12" r="10" fill="#dc2626"/>
+            </svg>
+        </div>`;
+    }
+  }
+  toggleRepasseFields(e) {
+    const repasseFields = document.getElementById('repasseFields');
+    const isChecked = document.getElementById('isRepasse').checked;
+    repasseFields.style.display = isChecked ? 'block' : 'none';
+  }
+  toggleAreaAtuacaoField(e) {
+    const areaAtuacaoField = document.getElementById('areaAtuacaoField');
+    const isChecked = document.getElementById('isAreaAtuacao').checked;
+    areaAtuacaoField.style.display = isChecked ? 'block' : 'none';
+  }
+  toggleObservacoesField(e) {
+    const observacoesField = document.getElementById('observacoesField');
+    const isChecked = document.getElementById('hasObservacoes').checked;
+    observacoesField.style.display = isChecked ? 'block' : 'none';
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    const isRepasse = document.getElementById('isRepasse').checked;
+    const editingId = this.form.dataset.editingId;
+    const anexosInput = document.getElementById('anexos');
+    const files = Array.from(anexosInput.files);
+    const anexos = [];
+    const processFiles = async () => {
+      for (const file of files) {
+        const base64 = await this.fileToBase64(file);
+        anexos.push(base64);
+      }
+      const observacoes = document.getElementById('hasObservacoes').checked ? document.getElementById('observacoes').value : '';
+      const areaAtuacao = document.getElementById('isAreaAtuacao').checked ? document.getElementById('areaAtuacao').value : '';
+      const servico = new ServicoExtraordinario(document.getElementById('data').value, document.getElementById('tipoServico').value, document.getElementById('operacao').value, parseFloat(document.getElementById('valor').value), document.getElementById('dataPagamento').value, isRepasse, isRepasse ? document.getElementById('qra').value : '', isRepasse ? document.getElementById('sei').value : '', isRepasse ? document.getElementById('bonus').value : '', anexos, document.getElementById('horaInicio').value, document.getElementById('horaTermino').value, observacoes, areaAtuacao);
+      if (editingId) {
+        const index = this.servicos.findIndex(s => s.id === editingId);
+        if (index !== -1) {
+          servico.id = editingId;
+          if (anexos.length === 0) {
+            servico.anexos = this.servicos[index].anexos;
+          }
+          this.servicos[index] = servico;
+        }
+        this.form.dataset.editingId = '';
+      } else {
+        this.servicos.push(servico);
+      }
+      this.saveServicos();
+      this.loadServicos();
+      this.form.reset();
+      document.getElementById('repasseFields').style.display = 'none';
+      document.getElementById('areaAtuacaoField').style.display = 'none';
+      document.getElementById('preview-container').innerHTML = '';
+    };
+    processFiles();
+  }
+  fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+  editServico(id) {
+    const servico = this.servicos.find(s => s.id === id);
+    if (servico) {
+      document.getElementById('data').value = servico.data;
+      document.getElementById('tipoServico').value = servico.tipoServico;
+      document.getElementById('operacao').value = servico.operacao;
+      document.getElementById('valor').value = servico.valor;
+      document.getElementById('dataPagamento').value = servico.dataPagamento || '';
+      document.getElementById('isRepasse').checked = servico.isRepasse;
+      const repasseFields = document.getElementById('repasseFields');
+      repasseFields.style.display = servico.isRepasse ? 'block' : 'none';
+      if (servico.isRepasse) {
+        document.getElementById('qra').value = servico.qra || '';
+        document.getElementById('sei').value = servico.sei || '';
+        document.getElementById('bonus').value = servico.bonus || '';
+      }
+      const previewContainer = document.getElementById('preview-container');
+      previewContainer.innerHTML = '';
+      servico.anexos?.forEach((anexo, index) => {
+        const imagePreview = document.createElement('div');
+        imagePreview.className = 'image-preview';
+        imagePreview.innerHTML = `
+                <img src="${anexo}" class="preview-image" alt="Anexo ${index + 1}">
+                <button class="remove-image" data-index="${index}">&times;</button>
+            `;
+        previewContainer.appendChild(imagePreview);
+      });
+      document.getElementById('horaInicio').value = servico.horaInicio || '';
+      document.getElementById('horaTermino').value = servico.horaTermino || '';
+      document.getElementById('hasObservacoes').checked = !!servico.observacoes;
+      const observacoesField = document.getElementById('observacoesField');
+      observacoesField.style.display = servico.observacoes ? 'block' : 'none';
+      if (servico.observacoes) {
+        document.getElementById('observacoes').value = servico.observacoes;
+      }
+      document.getElementById('isAreaAtuacao').checked = !!servico.areaAtuacao;
+      const areaAtuacaoField = document.getElementById('areaAtuacaoField');
+      areaAtuacaoField.style.display = servico.areaAtuacao ? 'block' : 'none';
+      if (servico.areaAtuacao) {
+        document.getElementById('areaAtuacao').value = servico.areaAtuacao;
+      }
+      document.getElementById('servicoForm').dataset.editingId = id;
+    }
+  }
+  deleteServico(id) {
+    if (confirm('Tem certeza que deseja excluir este registro?')) {
+      this.servicos = this.servicos.filter(servico => servico.id !== id);
+      this.saveServicos();
+      this.loadServicos();
+    }
+  }
+  saveServicos() {
+    localStorage.setItem('servicos', JSON.stringify(this.servicos));
+  }
+  saveUnavailableDays() {
+    localStorage.setItem('unavailableDays', JSON.stringify(this.unavailableDays));
+  }
+  generateReportData(period = 'all', customMonth = null) {
+    const now = new Date();
+    let startDate = new Date(0);
+    let endDate = new Date();
+    
+    if (period === 'custom' && customMonth) {
+      const [year, month] = customMonth.split('-');
+      startDate = new Date(year, month - 1, 1);
+      endDate = new Date(year, month, 0); // Last day of the selected month
+    } else {
+      switch (period) {
+        case 'week':
+          startDate = new Date(now.setDate(now.getDate() - 7));
+          break;
+        case 'biweek':
+          startDate = new Date(now.setDate(now.getDate() - 15));
+          break;
+        case 'month':
+          startDate = new Date(now.setMonth(now.getMonth() - 1));
+          break;
+        case 'quarter':
+          startDate = new Date(now.setMonth(now.getMonth() - 3));
+          break;
+        case 'semester':
+          startDate = new Date(now.setMonth(now.getMonth() - 6));
+          break;
+        case 'year':
+          startDate = new Date(now.setFullYear(now.getFullYear() - 1));
+          break;
+      }
+    }
+
+    const filteredServices = this.servicos.filter(service => {
+      const serviceDate = new Date(service.data);
+      return period === 'custom' ? 
+        (serviceDate >= startDate && serviceDate <= endDate) :
+        serviceDate >= startDate;
+    });
+
+    const serviceTypes = {};
+    const operations = {};
+    const timeSlots = {};
+    let servicesPaid = 0;
+    let servicesPending = 0;
+
+    filteredServices.forEach(service => {
+      serviceTypes[service.tipoServico] = (serviceTypes[service.tipoServico] || 0) + 1;
+      operations[service.operacao] = (operations[service.operacao] || 0) + 1;
+      
+      if (service.horaInicio) {
+        const hour = parseInt(service.horaInicio.split(':')[0]);
+        const slot = `${hour.toString().padStart(2, '0')}:00`;
+        timeSlots[slot] = (timeSlots[slot] || 0) + 1;
+      }
+
+      if (service.dataPagamento) {
+        servicesPaid++;
+      } else {
+        servicesPending++;
+      }
+    });
+
+    return {
+      serviceTypes: Object.entries(serviceTypes).sort((a, b) => b[1] - a[1]).slice(0, 10),
+      operations: Object.entries(operations).sort((a, b) => b[1] - a[1]).slice(0, 10),
+      timeSlots: Object.entries(timeSlots).sort((a, b) => b[1] - a[1]),
+      servicesPaid,
+      servicesPending
+    };
+  }
+
+  duplicateServico(id) {
+    const servico = this.servicos.find(s => s.id === id);
+    if (servico) {
+      const duplicatedServico = {
+        ...servico
+      };
+      duplicatedServico.id = Date.now().toString();
+      duplicatedServico.dataPagamento = '';
+      this.servicos.push(duplicatedServico);
+      this.saveServicos();
+      this.loadServicos();
+    }
+  }
+}
+function showReportDashboard() {
+  const container = document.querySelector('.container');
+  container.innerHTML = `
+    <h1>PAPA COTAS</h1>
+    <div class="subtitle">Relatórios e Análises</div>
+    
+    <div class="period-filter">
+      <select class="period-select" id="periodFilter">
+        <option value="all">Todo período</option>
+        <option value="week">Últimos 7 dias</option>
+        <option value="biweek">Últimos 15 dias</option>
+        <option value="month">Último mês</option>
+        <option value="quarter">Último trimestre</option>
+        <option value="semester">Último semestre</option>
+        <option value="year">Último ano</option>
+        <option value="custom">Mês específico</option>
+      </select>
+      
+      <input type="month" id="monthFilter" style="display: none; margin-left: 1rem;" 
+             value="${new Date().toISOString().slice(0,7)}">
+    </div>
+
+    <div class="report-card" style="margin-bottom: 2rem;">
+      <h3>Total de Serviços Extraordinários</h3>
+      <div class="chart-wrapper">
+        <canvas id="totalServicesChart"></canvas>
+      </div>
+    </div>
+    
+    <div class="report-container">
+      <div class="report-card">
+        <h3>Tipos de Serviço</h3>
+        <div class="chart-wrapper">
+          <canvas id="serviceTypesChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="report-card">
+        <h3>Operações mais Frequentes</h3>
+        <div class="chart-wrapper">
+          <canvas id="operationsChart"></canvas>
+        </div>
+      </div>
+      
+      <div class="report-card">
+        <h3>Horários mais Comuns</h3>
+        <div class="chart-wrapper">
+          <canvas id="timeSlotsChart"></canvas>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    .report-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .report-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .report-card h3 {
+      color: #0f172a;
+      font-size: 1.35rem;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    .chart-wrapper {
+      flex-grow: 1;
+      position: relative;
+    }
+
+    @media (max-width: 1200px) {
+      .report-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  let serviceTypesChart, operationsChart, timeSlotsChart, totalServicesChart;
+
+  function updateCharts(period, customMonth) {
+    const reportData = period === 'custom' ? 
+      gestaoServicos.generateReportData('month', customMonth) : 
+      gestaoServicos.generateReportData(period);
+    
+    if (serviceTypesChart) serviceTypesChart.destroy();
+    if (operationsChart) operationsChart.destroy();
+    if (timeSlotsChart) timeSlotsChart.destroy();
+    if (totalServicesChart) totalServicesChart.destroy();
+
+    const totalServices = reportData.serviceTypes.reduce((acc, [_, count]) => acc + count, 0);
+    const paidServices = reportData.servicesPaid;
+    const pendingServices = reportData.servicesPending;
+    
+    totalServicesChart = new Chart(document.getElementById('totalServicesChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Total de Serviços'],
+        datasets: [
+          {
+            label: 'Pagos',
+            data: [paidServices],
+            backgroundColor: '#16a34a',
+            stack: 'stack0'
+          },
+          {
+            label: 'Pendentes',
+            data: [pendingServices],
+            backgroundColor: '#dc2626',
+            stack: 'stack0'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: true,
+            text: `Total: ${totalServices} serviços`
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const value = context.raw;
+                const percentage = ((value / totalServices) * 100).toFixed(1);
+                return `${context.dataset.label}: ${value} (${percentage}%)`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              precision: 0
+            }
+          }
+        }
+      }
+    });
+
+    serviceTypesChart = new Chart(document.getElementById('serviceTypesChart'), {
+      type: 'bar',
+      data: {
+        labels: reportData.serviceTypes.map(item => item[0]),
+        datasets: [{
+          label: 'Quantidade',
+          data: reportData.serviceTypes.map(item => item[1]),
+          backgroundColor: '#3b82f6'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    operationsChart = new Chart(document.getElementById('operationsChart'), {
+      type: 'bar',
+      data: {
+        labels: reportData.operations.map(item => item[0]),
+        datasets: [{
+          label: 'Quantidade',
+          data: reportData.operations.map(item => item[1]),
+          backgroundColor: '#16a34a'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    timeSlotsChart = new Chart(document.getElementById('timeSlotsChart'), {
+      type: 'bar',
+      data: {
+        labels: reportData.timeSlots.map(item => item[0]),
+        datasets: [{
+          label: 'Quantidade',
+          data: reportData.timeSlots.map(item => item[1]),
+          backgroundColor: '#dc2626'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  }
+
+  document.getElementById('periodFilter').addEventListener('change', e => {
+    const monthFilter = document.getElementById('monthFilter');
+    if (e.target.value === 'custom') {
+      monthFilter.style.display = 'inline-block';
+      updateCharts('custom', monthFilter.value);
+    } else {
+      monthFilter.style.display = 'none';
+      updateCharts(e.target.value);
+    }
+  });
+
+  document.getElementById('monthFilter').addEventListener('change', e => {
+    updateCharts('custom', e.target.value);
+  });
+  
+  updateCharts('all');
+}
+function showBackupPage() {
+  const container = document.querySelector('.container');
+  container.innerHTML = `
+    <h1>PAPA COTAS</h1>
+    <div class="subtitle">Backup e Restauração</div>
+    
+    <div class="backup-options">
+      <div class="backup-section">
+        <h2>Fazer Backup</h2>
+        <p>Faça o download dos seus dados para manter uma cópia de segurança</p>
+        <button class="backup-btn" onclick="downloadBackup()">
+          <svg viewBox="0 0 24 24" width="16" height="16" style="margin-right: 8px">
+            <path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+          </svg>
+          Baixar Backup
+        </button>
+      </div>
+
+      <div class="backup-section">
+        <h2>Restaurar Backup</h2>
+        <p>Restaure seus dados a partir de um arquivo de backup</p>
+        <input type="file" id="restoreFile" accept=".json" style="display: none">
+        <button class="backup-btn" onclick="document.getElementById('restoreFile').click()">
+          <svg viewBox="0 0 24 24" width="16" height="16" style="margin-right: 8px">
+            <path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+          </svg>
+          Restaurar Backup
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Add event listener for restore file input
+  document.getElementById('restoreFile')?.addEventListener('change', handleRestore);
+}
+
+function downloadBackup() {
+  const data = {
+    servicos: gestaoServicos.servicos,
+    unavailableDays: gestaoServicos.unavailableDays
+  };
+  
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  
+  link.href = url;
+  link.download = `papa_cotas_backup_${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function handleRestore(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      
+      if (data.servicos && Array.isArray(data.servicos)) {
+        localStorage.setItem('servicos', JSON.stringify(data.servicos));
+      }
+      
+      if (data.unavailableDays && Array.isArray(data.unavailableDays)) {
+        localStorage.setItem('unavailableDays', JSON.stringify(data.unavailableDays));
+      }
+
+      alert('Backup restaurado com sucesso! A página será recarregada.');
+      window.location.reload();
+    } catch (error) {
+      alert('Erro ao restaurar o backup. Verifique se o arquivo é válido.');
+    }
+  };
+  reader.readAsText(file);
+}
+</script>
+</body>
+</html>
